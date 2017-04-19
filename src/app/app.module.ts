@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { routing,appRoutingProviders }  from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import {MaterialModule} from './material.module';
@@ -15,9 +16,11 @@ import {MaterialModule} from './material.module';
     FormsModule,
 	BrowserAnimationsModule,
     HttpModule,
-    MaterialModule
+    MaterialModule,
+      routing
   ],
-  providers: [],
+  providers: [appRoutingProviders],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

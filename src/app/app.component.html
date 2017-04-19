@@ -1,6 +1,8 @@
-<md-sidenav-container  class="app-sidenav">
+<md-sidenav-container  class="app-sidenav" [class.m2app-dark]="isDarkTheme">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
-    Sidenav
+
+    <router-outlet name="leftoutlet"></router-outlet>
+    <router-outlet name="popupOutlet"></router-outlet>
   </md-sidenav>
   <md-toolbar color="primary">
     <button class="app-icon-button" (click)="sidenav.toggle()">
@@ -9,25 +11,17 @@
     <h1>
       {{title}}
     </h1>
+    <md-toolbar color="primary">
+      <span>
+        <button md-button disabled="isLoggedin()"  onclick="userLogin()" id="btnLogin">Login</button>
+        <button md-button disabled="isLoggedin()"  onclick="newAccount()" id="btnNewAccount">New Account</button>
+      </span>
+    </md-toolbar>
   </md-toolbar>
 <div>
-  <!--<paper-drawer-panel >
-    <paper-header-panel  drawer>
-      <paper-toolbar>
-        <paper-button active="!isLoggedin()"  on-click="userLogin()" id="btnLogin">Login</paper-button>
-        <paper-button active="!isLoggedin()"  on-click="newAccount()" id="btnNewAccount">New Account</paper-button>
-      </paper-toolbar>
-      <router-outlet name="leftoutlet"></router-outlet>
-      <router-outlet name="popupOutlet"></router-outlet>
-    </paper-header-panel>
-
-    <paper-header-panel id="mainPanel" main>
-      <router-outlet></router-outlet>
-
-
-
-    </paper-header-panel>
-  </paper-drawer-panel>-->
-
+  <router-outlet></router-outlet>
 </div>
 </md-sidenav-container>
+<span class="app-action" [class.m2app-dark]="isDarkTheme">
+  <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
+</span>
