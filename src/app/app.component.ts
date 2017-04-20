@@ -9,7 +9,7 @@ import {isLoggedin} from "./utils/is-loggedin";
 })
 export class AppComponent {
   title = 'Jobine';
-  isDarkTheme: boolean = false;
+  isDarkTheme: boolean = true;
 
   constructor(private _router:Router ) {
   }

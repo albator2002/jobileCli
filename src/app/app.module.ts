@@ -7,9 +7,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import {MaterialModule} from './material.module';
 
+//import {AuthenticationService} from './services/authentication.service';
+import {ProfileService} from "./services/profile.service";
+//import {LoginComponent} from "./login.component";
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+  //  LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +25,7 @@ import {MaterialModule} from './material.module';
     MaterialModule,
       routing
   ],
-  providers: [appRoutingProviders],
+  providers: [appRoutingProviders,ProfileService],//AuthenticationService,ProfileService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
 })
