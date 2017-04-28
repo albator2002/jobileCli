@@ -16,7 +16,7 @@ export class AppComponent {
 
 
   userLogin(){
-   // this._router.navigate([{outlets: {leftoutlet: 'login'}}]);
+    this._router.navigate([{outlets: {leftoutlet: 'login'}}]);
   }
   newAccount(){
    // this._router.navigate([{outlets: {popupOutlet: 'profile'}}]);

@@ -1,6 +1,6 @@
-import { ModuleWithProviders }  from '@angular/core';
+import { NgModule }              from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-//import {LoginComponent} from "./login.component";
+import {LoginComponent} from "./login.component";
 //import {MenuComponent} from "./menu.component";
 //import {JobComponent} from "./jobs/job.component";
 //import {ProfileComponent} from "./profile.component";
@@ -8,10 +8,19 @@ import { Routes, RouterModule } from '@angular/router';
 //import {BlankComponent} from "./blank.component";
 
 const appRoutes: Routes = [
-
+    {
+        path: 'login',
+        component: LoginComponent,
+        outlet:'leftoutlet'
+    }
 ];
-export const appRoutingProviders: any[] = [
 
-];
-
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+@NgModule({
+    imports: [
+        RouterModule.forRoot(appRoutes)
+    ],
+    exports: [
+        RouterModule
+    ]
+})
+export class AppRoutingModule {}
