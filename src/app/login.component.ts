@@ -28,7 +28,7 @@ import {NgForm} from '@angular/forms';
       </div>
       </md-input-container>
       <div >
-        <button  md-button  onclick="login()">submit</button>
+        <button  md-button   (click)="login()">submit</button>
       </div>
     </form>
   `

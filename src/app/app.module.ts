@@ -10,12 +10,14 @@ import {MaterialModule} from './material.module';
 import {AuthenticationService} from './services/authentication.service';
 import {ProfileService} from "./services/profile.service";
 import {LoginComponent} from "./login.component";
+import {MenuComponent} from "./menu.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
