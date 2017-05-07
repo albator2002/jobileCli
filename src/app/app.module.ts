@@ -6,18 +6,24 @@ import { AppRoutingModule  }  from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import {MaterialModule} from './material.module';
+//import {ProfileComponent} from "./profile.component";
+import {ProfileDialog} from "./profile.dialog.component";
 
 import {AuthenticationService} from './services/authentication.service';
 import {ProfileService} from "./services/profile.service";
-import {LoginComponent} from "./login.component";
+import {LoginDialogComponent} from "./login.component";
 import {MenuComponent} from "./menu.component";
+import {BlankComponent} from "./blank.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    MenuComponent
+    LoginDialogComponent,
+    MenuComponent,
+    //ProfileComponent,
+    ProfileDialog,
+    BlankComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +33,7 @@ import {MenuComponent} from "./menu.component";
     MaterialModule,
     AppRoutingModule
   ],
+  entryComponents: [ProfileDialog,LoginDialogComponent],
   providers: [ProfileService,AuthenticationService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]

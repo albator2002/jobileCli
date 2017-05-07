@@ -8,8 +8,9 @@
   </h1>
   <md-toolbar color="primary">
       <span>
-        <button md-button hidden="isLoggedin()"  (click)="userLogin()" id="btnLogin">Login</button>
-        <button md-button hidden="isLoggedin()"  (click)="newAccount()" id="btnNewAccount">New Account</button>
+        <button md-button *ngIf="!isLoggedin()"  (click)="userLogin()" id="btnLogin">Login</button>
+        <button md-button *ngIf="!isLoggedin()"  (click)="newAccount()" id="btnNewAccount">New Account</button>
+        <button md-button *ngIf="isLoggedin()"  (click)="userLogout()" id="btnLogout">Logout</button>
       </span>
   </md-toolbar>
 </md-toolbar>
