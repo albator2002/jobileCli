@@ -6,7 +6,7 @@ import { AppRoutingModule  }  from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import {MaterialModule} from './material.module';
-//import {ProfileComponent} from "./profile.component";
+import {JobModule} from "./jobs/job.module";
 import {ProfileDialog} from "./profile.dialog.component";
 
 import {AuthenticationService} from './services/authentication.service';
@@ -31,7 +31,8 @@ import {BlankComponent} from "./blank.component";
 	BrowserAnimationsModule,
     HttpModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    JobModule
   ],
   entryComponents: [ProfileDialog,LoginDialogComponent],
   providers: [ProfileService,AuthenticationService],

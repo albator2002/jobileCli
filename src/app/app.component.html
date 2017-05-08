@@ -1,30 +1,28 @@
 <md-sidenav-container  class="app-sidenav" [class.m2app-dark]="isDarkTheme">
-<md-toolbar color="primary">
-  <button class="app-icon-button" (click)="sidenav.toggle()">
-    <i class="material-icons app-toolbar-menu">menu</i>
-  </button>
-  <h1>
-    {{title}}
-  </h1>
   <md-toolbar color="primary">
-      <span>
-        <button md-button *ngIf="!isLoggedin()"  (click)="userLogin()" id="btnLogin">Login</button>
-        <button md-button *ngIf="!isLoggedin()"  (click)="newAccount()" id="btnNewAccount">New Account</button>
-        <button md-button *ngIf="isLoggedin()"  (click)="userLogout()" id="btnLogout">Logout</button>
-      </span>
+    <button class="app-icon-button" (click)="sidenav.toggle()">
+      <i class="material-icons app-toolbar-menu">menu</i>
+    </button>
+    <h1>
+       {{title}}
+    </h1>
+    <md-toolbar color="primary">
+        <span>
+          <button md-button *ngIf="!isLoggedin()"  (click)="userLogin()" id="btnLogin">Login</button>
+          <button md-button *ngIf="!isLoggedin()"  (click)="newAccount()" id="btnNewAccount">New Account</button>
+          <button md-button *ngIf="isLoggedin()"  (click)="userLogout()" id="btnLogout">Logout</button>
+        </span>
+    </md-toolbar>
   </md-toolbar>
-</md-toolbar>
-
+  <div style="height: 800px">
+      <router-outlet></router-outlet>
+  </div>
   <md-sidenav #sidenav mode="side" class="app-sidenav" >
     <md-toolbar color="primary"> </md-toolbar>
     <router-outlet name="leftoutlet"></router-outlet>
     <router-outlet name="popupOutlet"></router-outlet>
   </md-sidenav>
-  <div style="height: 500px">
-      <router-outlet></router-outlet>
-  </div>
 </md-sidenav-container>
-
 <span class="app-action" [class.m2app-dark]="isDarkTheme">
   <button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>
 </span>
