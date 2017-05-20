@@ -14,6 +14,12 @@ import {LoginDialogComponent} from "./login.component";
 export class AppComponent {
   title = 'Jobine';
   isDarkTheme: boolean = true;
+  // google maps zoom level
+  zoom: number = 8;
+
+  // initial center position for the map
+  lat: number = 45.5602804;
+  lng: number = -73.8516124;
 
   constructor(private _router:Router,public dialog: MdDialog ) {
   }

@@ -16,14 +16,15 @@ import {MenuComponent} from "./menu.component";
 import {BlankComponent} from "./blank.component";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginDialogComponent,
     MenuComponent,
-    //ProfileComponent,
     ProfileDialog,
     BlankComponent
+
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,8 @@ import {BlankComponent} from "./blank.component";
     HttpModule,
     MaterialModule,
     AppRoutingModule,
-    JobModule
+    JobModule,
+
   ],
   entryComponents: [ProfileDialog,LoginDialogComponent],
   providers: [ProfileService,AuthenticationService],
