@@ -44,7 +44,7 @@ export class MapComponent implements OnInit {
     errorMessage: string;
 
     ngOnInit() {
-        this.lat = 45.5602804;  //,-73.8516124
+        this.lat = 45.5602804;
         this.lng = -73.8516124;
 
         this._jobService.getJobsbyProfile(this._profileService.pr.id)
