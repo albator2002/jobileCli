@@ -4,17 +4,20 @@ import {Http, Response,Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Profile} from "../model/profile";
+import { MapService} from "../jobs/services/map.service"
 
 
 @Injectable()
 export class ProfileService {
     token: string;
     pr:Profile;
-
-    constructor(private http: Http) {
+	mapService:MapService;
+	
+    constructor(private http: Http,mapService:MapService) {
         this.token = localStorage.getItem('token');
         this.http = http;
-        this.pr = new Profile("","","","","");
+		this.mapService = mapService;
+        this.pr = new Profile("","","","","",0,0);
     }
     private api_URL :string = 'http://localhost:4711/api';
 
@@ -24,14 +27,29 @@ export class ProfileService {
             .map((res : any) => {
                 let profile = res.json();
 
-                this.pr = new Profile(id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password);
+                this.pr = new Profile(id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password,profile.data.location.lat,profile.data.location.lng);
                 localStorage.setItem('token', this.token);
+				if(this.mapService.currentPos)
+				{
+					profile.data.location.lng = this.mapService.currentPos.lng;
+					profile.data.location.lat = this.mapService.currentPos.lat;
+				}
             });
     }
+	
+	//TODO
+	getProfilesForMapBounds(filters:[string])
+	{
+	}
 
     // createProfile
     createProfile(){
          let profile = this.pr;
+		 if(this.mapService.currentPos)
+		{
+			profile.data.location.lng = this.mapService.currentPos.lng;
+			profile.data.location.lat = this.mapService.currentPos.lat;
+		}
          return this.http.post(this.api_URL+'/profiles', profile, {
              headers: new Headers({
              'Content-Type': 'application/json'
@@ -46,6 +64,8 @@ export class ProfileService {
 
     updateProfile() {
         let profile = this.pr;
+		
+		this.mapService.currentPos.lng
         return this.http.put(this.api_URL+'/profiles/'+ profile.id , profile, {
             headers: new Headers({
                 'Content-Type': 'application/json'

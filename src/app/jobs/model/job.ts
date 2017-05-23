@@ -9,14 +9,14 @@ export class Job {
         type:string,
         description:string,
         location:{
-            longitude:number,
-            latitude:number,
+            lng:number,
+            lat:number,
         },
         created:string
 
     }
 
-    constructor(private _id:string,_profileId:string,private _name:string,private _type:string,private _description:string,_longitude:number,_latitude:number) {
+    constructor(private _id:string,_profileId:string,private _name:string,private _type:string,private _description:string,_lng:number,_lat:number) {
         this.id = _id;
         this.data = {
             "profileId": _profileId,
@@ -24,8 +24,8 @@ export class Job {
             "type": _type,
             "description": _description,
             "location": {
-                "longitude": _longitude,
-                "latitude": _latitude
+                "lng": _lng,
+                "lat": _lat
 
             },
             "created": new Date().toDateString()

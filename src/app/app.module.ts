@@ -12,6 +12,7 @@ import {ProfileDialog} from "./profile.dialog.component";
 import {AuthenticationService} from './services/authentication.service';
 import {ProfileService} from "./services/profile.service";
 import {LoginDialogComponent} from "./login.component";
+import { JobDetailsComponent} from "./jobs/jobDetails.component";
 import {MenuComponent} from "./menu.component";
 import {BlankComponent} from "./blank.component";
 
@@ -21,6 +22,7 @@ import {BlankComponent} from "./blank.component";
   declarations: [
     AppComponent,
     LoginDialogComponent,
+	JobDetailsComponent,
     MenuComponent,
     ProfileDialog,
     BlankComponent
@@ -36,7 +38,7 @@ import {BlankComponent} from "./blank.component";
     JobModule,
 
   ],
-  entryComponents: [ProfileDialog,LoginDialogComponent],
+  entryComponents: [ProfileDialog,LoginDialogComponent,JobDetailsComponent],
   providers: [ProfileService,AuthenticationService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]

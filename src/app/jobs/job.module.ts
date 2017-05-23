@@ -4,11 +4,12 @@ import { FormsModule }    from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {MapComponent} from "./map.component";
 import {JobService} from "./services/job.service";
+import {MapService} from "./services/map.service";
 
 @NgModule({
     imports:      [ CommonModule,FormsModule,HttpModule],
     declarations: [ MapComponent],
-    providers: [ JobService],
+    providers: [ JobService,MapService],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 
 })
