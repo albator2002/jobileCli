@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 
 import {Job} from "./model/job";
+import {Profile} from "../model/profile";
 import {isLoggedin} from "../utils/is-loggedin";
 import {JobService} from "./services/job.service";
 import {MapService} from "./services/map.service";
@@ -42,6 +43,7 @@ export class MapComponent implements OnInit {
     }
 
     jobList: Job[];
+	profileList: Profile[];
     errorMessage: string;
 
     ngOnInit() {
@@ -90,18 +92,16 @@ export class MapComponent implements OnInit {
 		
 		this._mapService.setCurrentPosition(map.getCenter().lat(),map.getCenter().lng());	
 		
-        
-		/*this._jobService.getJobsbyProfile(this._profileService.pr.id)
+        this._profileService.getProfilesForMapBounds([""])
+		//this._jobService.getJobsbyProfile(this._profileService.pr.id)
             .subscribe((res : any) => {
-                this.jobList = res;
-                //.toJSON();
-				//this._mapService.setMapBounds(mapBounds);
-				
-                for (let job of this.jobList) {
+                this.profileList = res;
+
+                for (let profile of this.profileList) {
                     let marker = new google.maps.Marker({
-                        position: {lat: job.data.location.lat, lng: job.data.location.lng},
+                        position: {lat: profile.data.location.lat, lng: profile.data.location.lng},
                         map: map,
-                        title: job.data.name
+                        title: profile.id
                     });
                 }
 				
@@ -109,7 +109,7 @@ export class MapComponent implements OnInit {
 				
 				
             })
-		*/
+
 
     }
 

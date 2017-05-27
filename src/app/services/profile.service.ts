@@ -12,12 +12,14 @@ export class ProfileService {
     token: string;
     pr:Profile;
 	mapService:MapService;
+
 	
     constructor(private http: Http,mapService:MapService) {
         this.token = localStorage.getItem('token');
         this.http = http;
 		this.mapService = mapService;
         this.pr = new Profile("","","","","",0,0);
+		
     }
     private api_URL :string = 'http://localhost:4711/api';
 
@@ -38,8 +40,10 @@ export class ProfileService {
     }
 	
 	//TODO
-	getProfilesForMapBounds(filters:[string])
-	{
+	getProfilesForMapBounds(filters:[string]): Observable<Profile[]>{
+	 return this.http.get(this.api_URL+'/profiles/')
+         .map(this.extractData)
+         .catch(this.handleError);
 	}
 
     // createProfile
@@ -75,6 +79,20 @@ export class ProfileService {
             let data = res.json();
         });
     }    /**/
+
+    private extractData(res: Response) {
+        if (res.status < 200 || res.status >= 300) {
+            throw new Error('Bad response status: ' + res.status);
+        }
+        let body = res.json();
+        return body || { };
+    }
+    private handleError (error: any) {
+        // In a real world app, we might send the error to remote logging infrastructure
+        let errMsg = error.message || 'Server error';
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
+    }
 }/**
  * Created by Alain on 5/10/2016.
  */
