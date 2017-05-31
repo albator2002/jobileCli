@@ -18,7 +18,7 @@ export class ProfileService {
         this.token = localStorage.getItem('token');
         this.http = http;
 		this.mapService = mapService;
-        this.pr = new Profile("","","","","",0,0);
+        this.pr = new Profile("","","","","",0,0,"");
 		
     }
     private api_URL :string = 'http://localhost:4711/api';
@@ -29,7 +29,7 @@ export class ProfileService {
             .map((res : any) => {
                 let profile = res.json();
 
-                this.pr = new Profile(id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password,profile.data.location.lat,profile.data.location.lng);
+                this.pr = new Profile(id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password,profile.data.location.lat,profile.data.location.lng,profile.data.worktypes);
                 localStorage.setItem('token', this.token);
 				if(this.mapService.currentPos)
 				{

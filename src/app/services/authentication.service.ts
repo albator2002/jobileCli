@@ -32,7 +32,7 @@ export class AuthenticationService {
      })
      .map((res : any) => {
        let profile = res.json();
-       this.svrProfile.pr = new Profile(profile._id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password,0,0);
+       this.svrProfile.pr = new Profile(profile._id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password,0,0,profile.data.worktypes);
        this.token = profile.data.token;
        localStorage.setItem('token', this.token);
      });

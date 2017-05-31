@@ -12,9 +12,10 @@ export class Profile {
             lng:number,
             lat:number,
         },
+        worktypes:string,
         created: string
     };
-    constructor(private _id:string,private _firstName:string,private _lastName:string,private _email:string,private _password:string,_lng:number,_lat:number){
+    constructor(private _id:string,private _firstName:string,private _lastName:string,private _email:string,private _password:string,_lng:number,_lat:number,_worktypes:string){
         this.id = _id;
         this.data =  {
             "firstname":_firstName,
@@ -26,6 +27,7 @@ export class Profile {
                 "lat": _lat
 
             },
+            "worktypes":_worktypes,
             "created":new Date().toDateString()
         };
 

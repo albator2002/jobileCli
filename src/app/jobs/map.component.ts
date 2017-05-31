@@ -101,7 +101,8 @@ export class MapComponent implements OnInit {
                     let marker = new google.maps.Marker({
                         position: {lat: profile.data.location.lat, lng: profile.data.location.lng},
                         map: map,
-                        title: profile.id
+                        title: profile.id,
+                        icon:"/images/"+ profile.data.worktypes +".png"   //ic_child_care_black_24dp_1x.png"
                     });
                 }
 				
