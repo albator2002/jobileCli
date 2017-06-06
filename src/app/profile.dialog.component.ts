@@ -18,21 +18,37 @@ import {Profile} from "./model/profile";
         <form  #profileForm="ngForm">
             <div *ngIf="error">Check your user name or password</div>
             <div>
-                <input mdInput id="firstname" floatPlaceholder [(ngModel)]="profileSvr.pr.data.firstname" name="firstname" required="true"
+                
+                <p><input mdInput id="firstname" placeholder="First Name" [(ngModel)]="profileSvr.pr.data.firstname" name="firstname" required="true"
                        #firstname="ngModel" error-message="Invalide" label="First Name"/>
+                </p>
             </div>
+            
             <div>
-                <input mdInput id="lastname" floatPlaceholder [(ngModel)]="profileSvr.pr.data.lastname" name="lastname" required="true"
+                <p><input mdInput id="lastname"  placeholder="Last Name" [(ngModel)]="profileSvr.pr.data.lastname" name="lastname" required="true"
                        #lastname="ngModel" error-message="Invalide" label="Last name"/>
+                </p>
             </div>
+
+            <md-select id="lbType"  [(ngModel)]="profileSvr.pr.data.worktypes" placeholder="Work Type" name="type" required="true"
+                       #type="ngModel" error-message="Invalide" label="Type">
+                <md-option  value="BABY">Gardienne</md-option>
+                <md-option  value="CLEANING">Femme de ménage</md-option>
+                <md-option  value="LAWN">Coupe gazon</md-option>
+                <md-option  value="SNOW">Déneigement</md-option>
+            </md-select>
             <div>
-                <input  mdInput id="email" floatPlaceholder [(ngModel)]="profileSvr.pr.data.email" name="email" required="true"
+                <p><input  mdInput id="email" placeholder="Email" [(ngModel)]="profileSvr.pr.data.email" name="email" required="true"
                        #email="ngModel" error-message="Invalide" label="Email"/>
+                </p>
+                
             </div>
+        
             <div>
-                <input mdInput id="pwd" floatPlaceholder [(ngModel)]="profileSvr.pr.data.password" name="password" required="true"
+                <input mdInput id="pwd" placeholder="Password" [(ngModel)]="profileSvr.pr.data.password" name="password" required="true" 
                        #pwd="ngModel" type="password" label="Password"/>
             </div>
+            <br>
             
         </form>
     
@@ -46,7 +62,9 @@ import {Profile} from "./model/profile";
 export class ProfileDialog {
     error: boolean = false;
 
-    constructor(public dialogRef: MdDialogRef<ProfileDialog>,private profileSvr: ProfileService, private route:ActivatedRoute, private router:Router) {}
+    constructor(public dialogRef: MdDialogRef<ProfileDialog>,private profileSvr: ProfileService, private route:ActivatedRoute, private router:Router) {
+
+    }
 
     saveProfile(){
         //if profile.id do update
@@ -56,7 +74,7 @@ export class ProfileDialog {
                 .subscribe(
                     (token: any) => {
 
-                        this.router.navigate([{outlets: {leftoutlet: 'menu'}}]);
+                        //this.router.navigate([{outlets: {leftoutlet: 'menu'}}]);
                         this.dialogRef.close();
                     },
                     () => {
@@ -68,7 +86,7 @@ export class ProfileDialog {
                 .subscribe(
                     (token: any) => {
 
-                        this.router.navigate([{outlets: {leftoutlet: 'menu'}}]);
+                        //this.router.navigate([{outlets: {leftoutlet: 'menu'}}]);
                         this.dialogRef.close();
 
                     },

@@ -3,6 +3,7 @@ import { Router} from '@angular/router';
 import {MdDialog, MdDialogRef} from '@angular/material';
 import {  NgIf} from '@angular/common';
 import {isLoggedin} from "./utils/is-loggedin";
+import {ProfileService} from './services/profile.service';
 import {ProfileDialog} from "./profile.dialog.component";
 import {LoginDialogComponent} from "./login.component";
 
@@ -21,7 +22,7 @@ export class AppComponent {
   lat: number = 45.5602804;
   lng: number = -73.8516124;
 
-  constructor(private _router:Router,public dialog: MdDialog ) {
+  constructor(private _router:Router,public dialog: MdDialog,private profileSvr: ProfileService ) {
   }
 
   isLoggedin() {
@@ -37,6 +38,7 @@ export class AppComponent {
   }
   newAccount(){
     //this._router.navigate([{outlets: {popupOutlet: 'profile'}}]);
+    this.profileSvr.newProfile();
     this.openProfileDialog();
   }
 

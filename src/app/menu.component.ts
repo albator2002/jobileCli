@@ -7,6 +7,7 @@ import {Component} from '@angular/core';
 import { Router} from '@angular/router';
 import {MdDialog, MdDialogRef} from '@angular/material';
 import { JobDetailsComponent} from "./jobs/jobDetails.component";
+import {ProfileDialog} from "./profile.dialog.component";
 
 
 @Component({
@@ -34,8 +35,8 @@ export class MenuComponent {
     }
 
     editProfile(){
-         this._router.navigate([{outlets: {popupOutlet: 'profile'}}]);
-
+         //this._router.navigate([{outlets: {popupOutlet: 'profile'}}]);
+        this.openProfileDialog();
     }
 
     newJob(){
@@ -53,4 +54,11 @@ export class MenuComponent {
       //this.selectedOption = result;
     });
   }
+
+    openProfileDialog() {
+        let dialogRef = this.dialog.open(ProfileDialog);
+        dialogRef.afterClosed().subscribe(result => {
+            //this.selectedOption = result;
+        });
+    }
 }

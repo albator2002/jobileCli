@@ -33,8 +33,8 @@ export class ProfileService {
                 localStorage.setItem('token', this.token);
 				if(this.mapService.currentPos)
 				{
-					profile.data.location.lng = this.mapService.currentPos.lng;
-					profile.data.location.lat = this.mapService.currentPos.lat;
+                    this.pr.data.location.lng = this.mapService.currentPos.lng;
+                    this.pr.data.location.lat = this.mapService.currentPos.lat;
 				}
             });
     }
@@ -45,6 +45,17 @@ export class ProfileService {
          .map(this.extractData)
          .catch(this.handleError);
 	}
+
+
+	newProfile(){
+        this.pr = new Profile("","","","","",0,0,"");
+        if(this.mapService.currentPos)
+        {
+            this.pr.data.location.lng = this.mapService.currentPos.lng;
+            this.pr.data.location.lat = this.mapService.currentPos.lat;
+        }
+
+    }
 
     // createProfile
     createProfile(){
