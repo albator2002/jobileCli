@@ -53,8 +53,35 @@ export class MapComponent implements OnInit {
                     zoom: this.zoom,
                     center: {lat: this.lat, lng: this.lng}					
                 });
-		
-		
+
+
+        //let initMarker = function(map:any,profileService:ProfileService){
+
+           this._profileService.getProfilesForMapBounds([""])
+            //this._jobService.getJobsbyProfile(this._profileService.pr.id)
+                .subscribe((res : any) => {
+                    this.profileList = res;
+
+                    for (let profile of this.profileList) {
+                        let marker = new google.maps.Marker({
+                            position: {lat: profile.data.location.lat, lng: profile.data.location.lng},
+                            map: map,
+                            title: profile.id,
+                            icon:"/images/"+ profile.data.worktypes +".png"   //ic_child_care_black_24dp_1x.png"
+                        });
+                    }
+                })
+
+       // };
+
+        /*map.addListener('center_changed', function() {
+            // 3 seconds after the center of the map has changed, pan back to the
+            // marker.
+            window.setTimeout(function() {
+            initMarker(map,this._profileService);
+            }, 1000);
+        });*/
+
 		let infoWindow = new google.maps.InfoWindow;
 
 		// Try HTML5 geolocation.
@@ -88,31 +115,13 @@ export class MapComponent implements OnInit {
 								  'Error: The Geolocation service failed.' :
 								  'Error: Your browser doesn\'t support geolocation.');
 			infoWindow.open(map);
-		}		
-		
-		this._mapService.setCurrentPosition(map.getCenter().lat(),map.getCenter().lng());	
-		
-        this._profileService.getProfilesForMapBounds([""])
-		//this._jobService.getJobsbyProfile(this._profileService.pr.id)
-            .subscribe((res : any) => {
-                this.profileList = res;
+		}
 
-                for (let profile of this.profileList) {
-                    let marker = new google.maps.Marker({
-                        position: {lat: profile.data.location.lat, lng: profile.data.location.lng},
-                        map: map,
-                        title: profile.id,
-                        icon:"/images/"+ profile.data.worktypes +".png"   //ic_child_care_black_24dp_1x.png"
-                    });
-                }
-				
-				
-				
-				
-            })
-
-
+        this._mapService.setCurrentPosition(map.getCenter().lat(),map.getCenter().lng());
     }
+
+
+
 
 
 
