@@ -7,16 +7,19 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {ProfileService} from './profile.service';
 import {Profile} from "../model/profile";
+import { MapService} from "../jobs/services/map.service"
 
 @Injectable()
 export class AuthenticationService {
     token: string;
     svrProfile:ProfileService;
+    mapService:MapService;
 
-     constructor(private http: Http, svrProfile:ProfileService) {
+     constructor(private http: Http, svrProfile:ProfileService,mapService:MapService) {
        this.token = localStorage.getItem('token');
        this.http = http;
        this.svrProfile = svrProfile;
+       this.mapService = mapService;
      }
      private api_URL :string = 'http://localhost:4711/api';
 
@@ -32,7 +35,7 @@ export class AuthenticationService {
      })
      .map((res : any) => {
        let profile = res.json();
-       this.svrProfile.pr = new Profile(profile._id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password,0,0,profile.data.worktypes);
+       this.svrProfile.pr = new Profile(profile._id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.password,this.mapService.currentPos.lat,this.mapService.currentPos.lng,profile.data.worktypes);
        this.token = profile.data.token;
        localStorage.setItem('token', this.token);
      });
