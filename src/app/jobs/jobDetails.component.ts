@@ -3,7 +3,7 @@
  */
 // jobDetails.component.ts
 import {Component, OnInit} from '@angular/core';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef} from '@angular/material';
 import {ActivatedRoute,Router } from '@angular/router';
 import {JobService} from './services/job.service';
 import {NgForm} from '@angular/forms';
@@ -42,7 +42,7 @@ import {ProfileService} from "../services/profile.service";
 export class JobDetailsComponent implements OnInit{
     error: boolean = false;
 
-    constructor(public dialogRef: MdDialogRef<JobDetailsComponent>,private jobSvr: JobService,private profileSvr:ProfileService, private route:ActivatedRoute, private router:Router) {
+    constructor(public dialogRef: MatDialogRef<JobDetailsComponent>,private jobSvr: JobService,private profileSvr:ProfileService, private route:ActivatedRoute, private router:Router) {
 
 
     }

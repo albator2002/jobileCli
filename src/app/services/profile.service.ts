@@ -80,7 +80,6 @@ export class ProfileService {
     updateProfile() {
         let profile = this.pr;
 		
-		this.mapService.currentPos.lng
         return this.http.put(this.api_URL+'/profiles/'+ profile.id , profile, {
             headers: new Headers({
                 'Content-Type': 'application/json'

@@ -53,35 +53,50 @@ export class MapComponent implements OnInit {
                     zoom: this.zoom,
                     center: {lat: this.lat, lng: this.lng}					
                 });
+        addMarkers(this._profileService);     
+           
+               
 
-
-        //let initMarker = function(map:any,profileService:ProfileService){
-
-           this._profileService.getProfilesForMapBounds([""])
+        function addMarkers(profileSrv:any)
+        {
+            profileSrv.getProfilesForMapBounds([""])
             //this._jobService.getJobsbyProfile(this._profileService.pr.id)
                 .subscribe((res : any) => {
-                    this.profileList = res;
+                let profileList = res;
 
-                    for (let profile of this.profileList) {
-                        let marker = new google.maps.Marker({
-                            position: {lat: profile.data.location.lat, lng: profile.data.location.lng},
-                            map: map,
-                            title: profile.id,
-                            icon:"/images/"+ profile.data.worktypes +".png"   //ic_child_care_black_24dp_1x.png"
-                        });
-                    }
-                })
+                for (let profile of profileList) {
+                    let marker = new google.maps.Marker({
+                        position: {lat: profile.data.location.lat, lng: profile.data.location.lng},
+                        map: map,
+                        title: profile.data.worktypes.toLowerCase(),
+                        icon: "/images/"+ profile.data.worktypes.toLowerCase() +".png"   //ic_child_care_black_24dp_1x.png"                            
+                    });
+                    attachSecretMessage(marker,profile.data.lastname+","+profile.data.firstname)
+                    //marker.setMap(map);
+                }
+            });
+        }  
 
-       // };
+        function attachSecretMessage(marker:any, secretMessage:string) {
+            let infowindow = new google.maps.InfoWindow({
+                content: secretMessage
+            });
+    
+            marker.addListener('click', function() {
+                infowindow.open(marker.get('map'), marker);
+            });
+        }
+        
 
         /*map.addListener('center_changed', function() {
             // 3 seconds after the center of the map has changed, pan back to the
             // marker.
             window.setTimeout(function() {
-            initMarker(map,this._profileService);
+            //initMarker(map,this._profileService);
+            addMarkers(this._profileService);
             }, 1000);
         });*/
-
+        
 		let infoWindow = new google.maps.InfoWindow;
 
 		// Try HTML5 geolocation.
@@ -109,7 +124,7 @@ export class MapComponent implements OnInit {
 		}
 		
 		
-		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+		function handleLocationError(browserHasGeolocation:any, infoWindow:any, pos:any) {
 			infoWindow.setPosition(pos);
 			infoWindow.setContent(browserHasGeolocation ?
 								  'Error: The Geolocation service failed.' :

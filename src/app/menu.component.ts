@@ -5,9 +5,11 @@
 // menu.component.ts
 import {Component} from '@angular/core';
 import { Router} from '@angular/router';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import {  NgIf} from '@angular/common';
+import {MatDialog, MatDialogRef} from '@angular/material';
 import { JobDetailsComponent} from "./jobs/jobDetails.component";
 import {ProfileDialog} from "./profile.dialog.component";
+import {AuthenticationService} from './services/authentication.service';
 
 
 @Component({
@@ -15,23 +17,24 @@ import {ProfileDialog} from "./profile.dialog.component";
     template: `
    <div>
     <div >
-        <md-list>
-            <md-list-item id="editProfile" (click)="editProfile()" >Edit Profile</md-list-item>
-            <md-list-item>Search</md-list-item>
-            <md-list-item>My Jobines</md-list-item>
-            <md-list-item>My Messages</md-list-item>
-            <md-list-item>My bookmark</md-list-item>
-            <md-list-item (click)="newJob()">New Jobine</md-list-item>
-            <md-list-item>About</md-list-item>
-        </md-list>
+        <mat-list>
+            <mat-list-item *ngIf="authSrv.authenticated" id="editProfile" (click)="editProfile()" >Edit Profile</mat-list-item>
+            <mat-list-item>Search</mat-list-item>
+            <mat-list-item>My Jobines</mat-list-item>
+            <mat-list-item>My Messages</mat-list-item>
+            <mat-list-item>My bookmark</mat-list-item>
+            <mat-list-item (click)="newJob()">New Jobine</mat-list-item>
+            <mat-list-item>About</mat-list-item>
+        </mat-list>
       </div>
    </div>
   `
 })
 
 export class MenuComponent {
-
-    constructor(private _router:Router,public dialog: MdDialog ) {
+    
+    constructor(private _router:Router,public dialog: MatDialog, private authSrv: AuthenticationService ) {
+        
     }
 
     editProfile(){

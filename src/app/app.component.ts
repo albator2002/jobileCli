@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router} from '@angular/router';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef} from '@angular/material';
 import {  NgIf} from '@angular/common';
 import {isLoggedin} from "./utils/is-loggedin";
 import {ProfileService} from './services/profile.service';
 import {ProfileDialog} from "./profile.dialog.component";
 import {LoginDialogComponent} from "./login.component";
+import {AuthenticationService} from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +23,11 @@ export class AppComponent {
   lat: number = 45.5602804;
   lng: number = -73.8516124;
 
-  constructor(private _router:Router,public dialog: MdDialog,private profileSvr: ProfileService ) {
+  constructor(private _router:Router,public dialog: MatDialog,private profileSvr: ProfileService, private authSrv: AuthenticationService) {
   }
 
   isLoggedin() {
-    return !!localStorage.getItem('token');
+    return !!this.authSrv.authenticated;   //!!localStorage.getItem('token');
   }
 
   userLogin(){
@@ -34,7 +35,8 @@ export class AppComponent {
     this.openLoginDialog();
   }
   userLogout(){
-    localStorage.removeItem('token');
+    //localStorage.removeItem('token');
+    this.authSrv.logout();
   }
   newAccount(){
     //this._router.navigate([{outlets: {popupOutlet: 'profile'}}]);
