@@ -3,7 +3,7 @@
  */
 // profile.component.ts
 import {Component} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef,MatSlideToggle} from '@angular/material';
 import {  NgIf} from '@angular/common';
 import {ActivatedRoute,Router } from '@angular/router';
 import 'rxjs/add/operator/map';
@@ -13,7 +13,7 @@ import {Profile} from "./model/profile";
 
 @Component({
     selector: 'profile-dialog',
-    template: ` <h1 mat-dialog-title>Dialog</h1>
+    template: ` <h1 mat-dialog-title>My Profile</h1>
     <div mat-dialog-content>
         <form  #profileForm="ngForm">
             <div *ngIf="error">Check your user name or password</div>
@@ -48,6 +48,7 @@ import {Profile} from "./model/profile";
                 <input matInput id="pwd" placeholder="Password" [(ngModel)]="profileSvr.pr.data.password" name="password" required="true" 
                        #pwd="ngModel" type="password" label="Password"/>
             </div>
+            <mat-slide-toggle id="lbAvailable" [(ngModel)]="profileSvr.pr.data.available" name="available" #available="ngModel" placeholder="Available Now" aria-label="Avialable Now">Available Now</mat-slide-toggle>
             <br>
             
         </form>
