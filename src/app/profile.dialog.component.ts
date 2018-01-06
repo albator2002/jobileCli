@@ -8,6 +8,8 @@ import {  NgIf} from '@angular/common';
 import {ActivatedRoute,Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import {ProfileService} from './services/profile.service';
+import {AuthenticationService} from './services/authentication.service';
+
 import {NgForm} from '@angular/forms';
 import {Profile} from "./model/profile";
 
@@ -63,7 +65,7 @@ import {Profile} from "./model/profile";
 export class ProfileDialog {
     error: boolean = false;
 
-    constructor(public dialogRef: MatDialogRef<ProfileDialog>,private profileSvr: ProfileService, private route:ActivatedRoute, private router:Router) {
+    constructor(public dialogRef: MatDialogRef<ProfileDialog>,private profileSvr: ProfileService,private authSrv: AuthenticationService, private route:ActivatedRoute, private router:Router) {
 
     }
 
@@ -86,7 +88,8 @@ export class ProfileDialog {
             this.profileSvr.createProfile()
                 .subscribe(
                     (token: any) => {
-
+                        this.authSrv.authenticated = true;
+                        this.authSrv.token = this.profileSvr.token;
                         //this.router.navigate([{outlets: {leftoutlet: 'menu'}}]);
                         this.dialogRef.close();
 
