@@ -8,41 +8,51 @@ import {ActivatedRoute,Router } from '@angular/router';
 import {JobService} from './services/job.service';
 import {NgForm} from '@angular/forms';
 import {ProfileService} from "../services/profile.service";
+import { Action } from '../model/action';
+import { Event } from '../model/event';
+import { Message } from '../model/message';
+import { User } from '../model/user';
+import { SocketService } from '../services/socket.service';
 @Component({
     selector: 'jobDetails',
 
     template: `   
-	<h1 md-dialog-title>New Job</h1>
+	<h1 mat-dialog-title>New Job</h1>
 
-	<div md-dialog-content>
+	<div mat-dialog-content>
 	 <form  #jobForm="ngForm">
 	  
 	   <div>
-	   <input id="name" mdInput type="text" placeholder="Job Name" floatPlaceholder  [(ngModel)]="jobSvr.job.data.name" name="name" required="true"
+	   <input id="name" matInput type="text" placeholder="Job Name" floatPlaceholder  [(ngModel)]="jobSvr.job.data.name" name="name" required="true"
 			   #name="ngModel" error-message="Invalide" label="Name"/>
 	  </div>
-	  <md-select id="lbType"  [(ngModel)]="jobSvr.job.data.type" name="type" required="true"
+	  <mat-select id="lbType"  [(ngModel)]="jobSvr.job.data.type" name="type" required="true"
 			   #type="ngModel" error-message="Invalide" label="Type">
-		<md-option  value="Reno">Reno</md-option>
-		<md-option  value="Exterieur">Exterieur</md-option>
-	  </md-select>
+		<mat-option  value="Reno">Reno</mat-option>
+		<mat-option  value="Exterieur">Exterieur</mat-option>
+	  </mat-select>
 	  <div>
-	   <input id="description" mdInput type="text" placeholder="Job Description" floatPlaceholder  [(ngModel)]="jobSvr.job.data.description" name="description" required="true"
+	   <input id="description" matInput type="text" placeholder="Job Description" floatPlaceholder  [(ngModel)]="jobSvr.job.data.description" name="description" required="true"
 			   #description="ngModel" error-message="Invalide" label="Description"/>
 	  </div>
 	 
 	 
 	 </form>
 	</div>
-	<div md-dialog-actions>
-		<button md-button (click)="saveJob()"   >submit</button>
+	<div mat-dialog-actions>
+		<button mat-button (click)="saveJob()"   >submit</button>
 	</div>
   `
 })
 export class JobDetailsComponent implements OnInit{
     error: boolean = false;
+    ioConnection: any;
+    action = Action;
+    user: User;
+    messages: Message[] = [];
+    messageContent: string;
 
-    constructor(public dialogRef: MatDialogRef<JobDetailsComponent>,private jobSvr: JobService,private profileSvr:ProfileService, private route:ActivatedRoute, private router:Router) {
+    constructor(public dialogRef: MatDialogRef<JobDetailsComponent>,private jobSvr: JobService,private profileSvr:ProfileService,private socketService: SocketService, private route:ActivatedRoute, private router:Router) {
 
 
     }
@@ -56,8 +66,39 @@ export class JobDetailsComponent implements OnInit{
 
     }*/
 
+    private initIoConnection(): void {
+        this.socketService.initSocket();
+    
+        this.ioConnection = this.socketService.onMessage()
+          .subscribe((message: Message) => {
+            this.messages.push(message);
+          });
+    
+    
+        this.socketService.onEvent(Event.CONNECT)
+          .subscribe(() => {
+            console.log('connected');
+          });
+    
+        this.socketService.onEvent(Event.DISCONNECT)
+          .subscribe(() => {
+            console.log('disconnected');
+          });
+    }
 
+    public sendNotification(params: any, action: Action): void {
+        let message: Message;
+    
+        if (action === Action.JOINED) {
+          message = {
+            from: this.user,
+            action: action
+          }
 
+        }
+
+        this.socketService.send(message);
+    }
 
     saveJob(){
         let lbType = <HTMLElement>document.querySelector('#lbType');
@@ -72,7 +113,7 @@ export class JobDetailsComponent implements OnInit{
                 .subscribe(
 
                     (job: any) => {
-
+                        
                         this.dialogRef.close();
                         //this.router.navigate([{outlets: {leftoutlet: 'menu',popupOutlet:'blank'}}]);
 
@@ -88,7 +129,11 @@ export class JobDetailsComponent implements OnInit{
                 .subscribe(
 
                     (job: any) => {
-
+                        this.user.id = this.profileSvr.pr.id;
+                        this.user.name = this.profileSvr.pr.data.lastname;
+                        
+                        this.initIoConnection();
+                        this.sendNotification("", Action.JOINED);
                         this.dialogRef.close();
                         //this.router.navigate([{outlets: {leftoutlet: 'menu',popupOutlet:'blank'}}]);
 

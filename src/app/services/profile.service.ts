@@ -18,7 +18,7 @@ export class ProfileService {
         this.token = localStorage.getItem('token');
         this.http = http;
 		this.mapService = mapService;
-        this.pr = new Profile("","","","",true,"",mapService.currentPos.lat,mapService.currentPos.lng,"");
+        this.pr = new Profile("","","","",true,"",mapService.currentPos.lng,mapService.currentPos.lat,"");
 		
     }
     private api_URL :string = 'http://localhost:4711/api';
@@ -29,13 +29,13 @@ export class ProfileService {
             .map((res : any) => {
                 let profile = res.json();
 
-                this.pr = new Profile(id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.available,profile.data.password,this.mapService.currentPos.lat,this.mapService.currentPos.lng,profile.data.worktypes);
+                this.pr = new Profile(id, profile.data.firstname,profile.data.lastname,profile.data.email,profile.data.available,profile.data.password,this.mapService.currentPos.lng,this.mapService.currentPos.lat,profile.data.worktypes);
                 localStorage.setItem('token', this.token);
-				/*if(this.mapService.currentPos)
+				if(this.mapService.currentPos)
 				{
                     this.pr.data.location.lng = this.mapService.currentPos.lng;
                     this.pr.data.location.lat = this.mapService.currentPos.lat;
-				}*/
+				}
             });
     }
 	
@@ -48,13 +48,7 @@ export class ProfileService {
 
 
 	newProfile(){
-        this.pr = new Profile("","","","",true,"",this.mapService.currentPos.lat,this.mapService.currentPos.lng,"");
-        /*if(this.mapService.currentPos)
-        {
-            this.pr.data.location.lng = this.mapService.currentPos.lng;
-            this.pr.data.location.lat = this.mapService.currentPos.lat;
-        }*/
-
+        this.pr = new Profile("","","","",true,"",this.mapService.currentPos.lng,this.mapService.currentPos.lat,"");
     }
 
     // createProfile
@@ -79,7 +73,11 @@ export class ProfileService {
 
     updateProfile() {
         let profile = this.pr;
-		
+        if(this.mapService.currentPos)
+		{
+			profile.data.location.lng = this.mapService.currentPos.lng;
+			profile.data.location.lat = this.mapService.currentPos.lat;
+		}
         return this.http.put(this.api_URL+'/profiles/'+ profile.id , profile, {
             headers: new Headers({
                 'Content-Type': 'application/json'

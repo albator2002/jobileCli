@@ -19,6 +19,7 @@ import {AuthenticationService} from './services/authentication.service';
     <div >
         <mat-list>
             <mat-list-item *ngIf="authSrv.authenticated" id="editProfile" (click)="editProfile()" >My Profile</mat-list-item>
+            <mat-list-item *ngIf="authSrv.authenticated" id="newJob" (click)="newJob()" >Post a JOB</mat-list-item>
             <mat-list-item *ngIf="authSrv.authenticated">My History</mat-list-item>
             <mat-list-item *ngIf="authSrv.authenticated">My Messages</mat-list-item>
             <mat-list-item *ngIf="authSrv.authenticated">My Contact</mat-list-item>
@@ -40,7 +41,7 @@ export class MenuComponent {
          //this._router.navigate([{outlets: {popupOutlet: 'profile'}}]);
         this.openProfileDialog();
     }
-/*
+
     newJob(){
         //this._router.navigate([{outlets: {popupOutlet: 'job'}}]);
 		this.openJobDetailsDialog();
@@ -55,7 +56,7 @@ export class MenuComponent {
     dialogRef.afterClosed().subscribe(result => {
       //this.selectedOption = result;
     });
-  }*/
+  }
 
     openProfileDialog() {
         let dialogRef = this.dialog.open(ProfileDialog);
